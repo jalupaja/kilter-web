@@ -61,7 +61,7 @@ function encodePositionAndColor(position, ledColor) {
     return [...encodePosition(position), encodeColor(ledColor)];
 }
 
-function getBluetoothPacket(frames, placementPositions, colors) {
+export function getBluetoothPacket(frames, placementPositions, colors) {
     const resultArray = [];
     let tempArray = [PACKET_MIDDLE];
     frames.split("p").forEach((frame) => {

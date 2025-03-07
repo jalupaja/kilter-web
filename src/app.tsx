@@ -1,8 +1,11 @@
 // import { useState } from 'preact/hooks';
 // import preactLogo from './assets/preact.svg';
 // import viteLogo from '/vite.svg';
-// import { requestDevice } from './bluetooth';
 import './app.css';
+import BoulderSelect from './BoulderSelect.js';
+import { useState, } from 'preact/hooks';
+import { getBluetoothPacket } from './bluetooth.ts';
+import { Boulder, TEST_CLIMBS, TEST_POSITIONS } from './testdata.js';
 
 export function App() {
     // copied from bluetooth.js
@@ -76,11 +79,61 @@ export function App() {
 
     }
 
+    const [selectedBoulder, setSelectedBoulder] = useState<Boulder | null>(null);
+
+    const handleChange = (event: Event) => {
+        const target = event.target as HTMLSelectElement;
+        const selectedBoulder = TEST_CLIMBS.find(item => item.name === target.value) || null;
+        setSelectedBoulder(selectedBoulder);
+    };
+
+    async function transmitBoulder() {
+        const bluetoothPacket = getBluetoothPacket(selectedBoulder?.frames || '', TEST_POSITIONS);
+
+        const device = await navigator.bluetooth.requestDevice({
+            acceptAllDevices: true,
+            optionalServices: [SERVICE_UUID],
+        });
+
+        device.gatt?.connect()
+            .then((server) => {
+                return server.getPrimaryService(SERVICE_UUID);
+            })
+            .then((service) => {
+                return service.getCharacteristic(CHARACTERISTIC_UUID);
+            })
+            .then((characteristic) => {
+                const splitMessages = (buffer: Uint8Array) =>
+                    splitEvery(MAX_BLUETOOTH_MESSAGE_SIZE, Array.from(buffer)).map(
+                        (arr) => new Uint8Array(arr)
+                    );
+                return writeCharacteristicSeries(
+                    characteristic,
+                    splitMessages(bluetoothPacket)
+                );
+            })
+            .then(() => console.log("Climb illuminated"))
+            .catch((error) => {
+                if (error.message !== BLUETOOTH_CANCELLED) {
+                    const message =
+                        error.message === BLUETOOTH_UNDEFINED
+                            ? "Web Bluetooth is not supported on this browser. See https://caniuse.com/web-bluetooth for more information."
+                            : `Failed to connect to LEDS: ${error}`;
+                    alert(message);
+                }
+            });
+    }
+
     return (
         <>
             <h1>Magic Kilterboard Button</h1>
-            <button onClick={test}>
+            <BoulderSelect selectedBoulder={selectedBoulder} onChange={handleChange} />
+            <button onClick={transmitBoulder}>
                     Click here
+            </button>
+
+            <button onClick={test}>
+                    backup
             </button>
         </>
     );
