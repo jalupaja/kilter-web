@@ -5,8 +5,8 @@ export interface Boulder {
     boulder_name: string;
 }
 
-export const TEST_CLIMBS = 
-[{"name":"proj braj","frames":"p1086r15p1113r15p1145r12p1163r12p1186r13p1198r13p1254r13p1283r13p1353r14","difficulty_average":22.770800000000001261,"boulder_name":"7a+/V7"},
+export const TEST_CLIMBS = [
+    {"name":"proj braj","frames":"p1086r15p1113r15p1145r12p1163r12p1186r13p1198r13p1254r13p1283r13p1353r14","difficulty_average":22.770800000000001261,"boulder_name":"7a+/V7"},
     {"name":"Kiel training 1:4","frames":"p1083r15p1133r15p1166r12p1231r13p1286r13p1287r13p1322r13p1387r14p1476r15p1516r15p1530r15p1534r15","difficulty_average":22.876400000000000289,"boulder_name":"7a+/V7"},
     {"name":"hammer drop","frames":"p1166r12p1214r15p1253r13p1283r13p1355r13p1384r14p1470r15p1540r15","difficulty_average":23.813099999999998602,"boulder_name":"7b/V8"},
     {"name":"just a day","frames":"p1149r12p1234r12p1304r13p1306r13p1371r13p1384r14p1468r15p1470r15p1515r15","difficulty_average":23.807900000000000062,"boulder_name":"7b/V8"},
@@ -17,7 +17,14 @@ export const TEST_CLIMBS =
     {"name":"Rastaman","frames":"p1173r12p1189r13p1220r13p1284r13p1287r13p1334r13p1349r13p1382r14p1447r15p1451r15p1499r15p1529r15p1549r15","difficulty_average":23.941299999999998248,"boulder_name":"7b/V8"},
     {"name":"chortle","frames":"p1205r12p1210r15p1220r12p1269r13p1283r13p1299r13p1346r13p1379r14p1509r15","difficulty_average":22.935700000000000641,"boulder_name":"7a+/V7"},
     {"name":"siqo mode","frames":"p1077r15p1113r15p1117r12p1153r12p1201r13p1250r13p1281r13p1351r13p1386r14","difficulty_average":22.916799999999998504,"boulder_name":"7a+/V7"},
-   ];
+];
+
+export const TEST_COLORS = {
+    "r12": "00ff00",
+    "r13": "0000ff",
+    "r14": "a000ae",
+    "r15": "ffdb30",
+};
 
 // layout for Original 12x12 with kickboard
 // const TEST_LAYOUT =

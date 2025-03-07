@@ -5,7 +5,7 @@ import './app.css';
 import BoulderSelect from './BoulderSelect.js';
 import { useState, } from 'preact/hooks';
 import { getBluetoothPacket } from './bluetooth.ts';
-import { Boulder, TEST_CLIMBS, TEST_POSITIONS } from './testdata.js';
+import { Boulder, TEST_CLIMBS, TEST_POSITIONS, TEST_COLORS } from './testdata.js';
 
 export function App() {
     // copied from bluetooth.js
@@ -88,7 +88,7 @@ export function App() {
     };
 
     async function transmitBoulder() {
-        const bluetoothPacket = getBluetoothPacket(selectedBoulder?.frames || '', TEST_POSITIONS);
+        const bluetoothPacket = getBluetoothPacket(selectedBoulder?.frames || '', TEST_POSITIONS, TEST_COLORS);
 
         const device = await navigator.bluetooth.requestDevice({
             acceptAllDevices: true,

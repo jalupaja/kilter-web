@@ -62,7 +62,7 @@ function encodePositionAndColor(position: number, ledColor: string): number[] {
 }
 
 // param: colors: { [key: string]: string }
-export function getBluetoothPacket(frames: string, placementPositions: { [key: string]: number }): Uint8Array {
+export function getBluetoothPacket(frames: string, placementPositions: { [key: string]: number }, colors: { [key: string]: string }): Uint8Array {
     const resultArray: number[][] = [];
     let tempArray: number[] = [PACKET_MIDDLE];
     frames.split("p").forEach((frame) => {
@@ -70,8 +70,7 @@ export function getBluetoothPacket(frames: string, placementPositions: { [key: s
             const [placement, _role] = frame.split("r");
             const encodedFrame = encodePositionAndColor(
                 Number(placementPositions[placement]),
-                // colors[role]
-                "121212"
+                colors[role]
             );
             if (tempArray.length + 3 > MESSAGE_BODY_MAX_LENGTH) {
                 resultArray.push(tempArray);
