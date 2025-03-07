@@ -67,7 +67,7 @@ export function getBluetoothPacket(frames: string, placementPositions: { [key: s
     let tempArray: number[] = [PACKET_MIDDLE];
     frames.split("p").forEach((frame) => {
         if (frame.length > 0) {
-            const [placement, _role] = frame.split("r");
+            const [placement, role] = frame.split("r");
             const encodedFrame = encodePositionAndColor(
                 Number(placementPositions[placement]),
                 colors[role]
