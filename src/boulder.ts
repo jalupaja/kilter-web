@@ -1,7 +1,7 @@
 import { createContext } from 'preact';
 
 export interface Boulder {
-    id: number;
+    uuid: string;
     label: string;
 }
 
@@ -12,6 +12,6 @@ interface BoulderContextType {
 }
 
 export const BoulderContext = createContext<BoulderContextType>({
-    boulder: { id: NaN, label: "" },
+    boulder: { uuid: "", label: "" },
     toggleTheme: () => { },
 });
