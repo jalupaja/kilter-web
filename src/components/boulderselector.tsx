@@ -1,9 +1,9 @@
 import { useState, useContext } from 'preact/hooks';
-import { Boulder } from '../boulder';
+import { Boulder } from '../boulder.ts';
 import { ThemeContext } from '../theme.ts';
 
 const BoulderSelector = () => {
-    const [selectedBoard, setSelectedBoard] = useState<number>(NaN);
+    const [selectedBoulder, setSelectedBoulder] = useState<number>(NaN);
     const { theme } = useContext(ThemeContext);
 
     const boulders: Boulder[] = [
@@ -14,19 +14,19 @@ const BoulderSelector = () => {
 
     const handleSelectChange = (event: Event) => {
         const target = event.target as HTMLSelectElement;
-        setSelectedBoard(parseInt(target.value, 10));
+        setSelectedBoulder(parseInt(target.value, 10));
     };
 
-    const goToBoard = () => {
-        if (selectedBoard) {
-            window.location.href = `/boulder/${selectedBoard}`;
+    const goToBoulder = () => {
+        if (selectedBoulder) {
+            window.location.href = `/boulder/${selectedBoulder}`;
         } else {
             alert('Please select a Boulder first.');
         }
     };
 
     const printSelected = () => {
-        const boulder = boulders.find(b => b.id === selectedBoard);
+        const boulder = boulders.find(b => b.id === selectedBoulder);
         if (boulder) {
             console.log(`Selected boulder: ${boulder.label}`);
         } else {
@@ -36,14 +36,14 @@ const BoulderSelector = () => {
 
     return (
         <div style={{ padding: '1rem' }}>
-            <select value={selectedBoard} onChange={handleSelectChange}>
+            <select value={selectedBoulder} onChange={handleSelectChange}>
                 {boulders.map(boulder => (
                     <option key={boulder.id} value={boulder.id}>
                         {boulder.label}
                     </option>
                 ))}
             </select>
-            <button onClick={goToBoard} style={{ marginLeft: '1rem', backgroundColor: theme.background2, }}>
+            <button onClick={goToBoulder} style={{ marginLeft: '1rem', backgroundColor: theme.background2, }}>
                 Go to Boulder
             </button>
             <button onClick={printSelected} style={{ marginLeft: '1rem', backgroundColor: theme.background2, }}>

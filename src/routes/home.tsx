@@ -1,5 +1,5 @@
 import NavBar from "../components/navbar.tsx";
-import BoulderSelector from "../components/boardselector.tsx";
+import BoulderSelector from "../components/boulderselector.tsx";
 
 export const Home = () => {
     return (
