@@ -2,9 +2,24 @@ import { useState, useContext } from 'preact/hooks';
 import { Boulder } from '../boulder.ts';
 import { ThemeContext } from '../theme.ts';
 
+const STORAGE_KEY = "boulder";
+
 const BoulderSelector = () => {
-    const [selectedBoulder, setSelectedBoulder] = useState<number>(NaN);
+    const storage_res = localStorage.getItem(STORAGE_KEY);
+    let cur_boulder: number = NaN;
+
+    if (storage_res) {
+        cur_boulder = parseInt(storage_res);
+    }
+
+    const [selectedBoulder, setSelectedBoulder] = useState<number>(cur_boulder);
     const { theme } = useContext(ThemeContext);
+
+    const selectBoulder = (next_boulder: number) => {
+        setSelectedBoulder(next_boulder);
+
+        localStorage.setItem(STORAGE_KEY, String(next_boulder));
+    }
 
     const boulders: Boulder[] = [
         { id: 1, label: 'Boulder One' },
@@ -14,7 +29,7 @@ const BoulderSelector = () => {
 
     const handleSelectChange = (event: Event) => {
         const target = event.target as HTMLSelectElement;
-        setSelectedBoulder(parseInt(target.value, 10));
+        selectBoulder(parseInt(target.value, 10));
     };
 
     const goToBoulder = () => {
