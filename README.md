@@ -1,6 +1,6 @@
-## Kilter-DB
+relevant queries:
 ```SQL
--- placement id to led id map
+-- placement id to led id map (original 12x12 with kickboard)
 select
     placements.id,
     leds.position
