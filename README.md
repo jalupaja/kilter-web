@@ -1,6 +1,6 @@
 relevant queries:
 ```SQL
--- placement id to led id map (original 12x12 with kickboard)
+-- placement id to led id map (original 12x12 with kickboard and screw-ons)
 select
     placements.id,
     leds.position
