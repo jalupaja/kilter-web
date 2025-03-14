@@ -87,8 +87,19 @@ export function App() {
         setSelectedBoulder(selectedBoulder);
     };
 
+    async function sendBoulder(packet: any, characteristic: any) {
+        const splitMessages = (buffer: Uint8Array) =>
+            splitEvery(MAX_BLUETOOTH_MESSAGE_SIZE, Array.from(buffer)).map(
+                (arr) => new Uint8Array(arr)
+            );
+        return writeCharacteristicSeries(
+            characteristic,
+            splitMessages(packet)
+        );
+    }
+
     async function transmitBoulder() {
-        const bluetoothPacket = getBluetoothPacket(selectedBoulder?.frames || '', TEST_POSITIONS, TEST_COLORS);
+        // const bluetoothPacket = getBluetoothPacket(selectedBoulder?.frames || '', TEST_POSITIONS, TEST_COLORS);
 
         const device = await navigator.bluetooth.requestDevice({
             acceptAllDevices: true,
@@ -103,14 +114,10 @@ export function App() {
                 return service.getCharacteristic(CHARACTERISTIC_UUID);
             })
             .then((characteristic) => {
-                const splitMessages = (buffer: Uint8Array) =>
-                    splitEvery(MAX_BLUETOOTH_MESSAGE_SIZE, Array.from(buffer)).map(
-                        (arr) => new Uint8Array(arr)
-                    );
-                return writeCharacteristicSeries(
-                    characteristic,
-                    splitMessages(bluetoothPacket)
-                );
+                for(const b of TEST_CLIMBS) {
+                    const p = getBluetoothPacket(b.frames, TEST_POSITIONS, TEST_COLORS);
+                    sendBoulder(characteristic, p);
+                }
             })
             .then(() => console.log("Climb illuminated"))
             .catch((error) => {
