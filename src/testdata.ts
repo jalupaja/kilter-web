@@ -20,10 +20,10 @@ export const TEST_CLIMBS = [
 ];
 
 export const TEST_COLORS = {
-    "r12": "00ff00",
-    "r13": "0000ff",
-    "r14": "a000ae",
-    "r15": "ffdb30",
+    "12": "00ff00",
+    "13": "0000ff",
+    "14": "a000ae",
+    "15": "ffdb30",
 };
 
 // layout for Original 12x12 with kickboard

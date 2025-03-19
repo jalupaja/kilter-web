@@ -4,7 +4,7 @@
 import './app.css';
 import BoulderSelect from './BoulderSelect.js';
 import { useState, } from 'preact/hooks';
-import { getBluetoothPacket } from './bluetooth.ts';
+import { getBluetoothPacket, requestDevice } from './bluetooth.ts';
 import { Boulder, TEST_CLIMBS, TEST_POSITIONS, TEST_COLORS } from './testdata.js';
 
 export function App() {
@@ -44,10 +44,7 @@ export function App() {
     async function test(): Promise<void> {
         const bluetoothPacket: number[] = [1, 37, 21, 2, 84, 227, 0, 28, 20, 1, 28, 69, 0, 31, 145, 0, 31, 63, 0, 31, 157, 0, 31, 208, 0, 31, 55, 1, 227, 27, 1, 244, 239, 0, 244, 33, 0, 244, 49, 1, 244, 3];
 
-        const device = await navigator.bluetooth.requestDevice({
-            acceptAllDevices: true,
-            optionalServices: [SERVICE_UUID],
-        });
+        const device = requestDevice("Kilter");
 
         device.gatt?.connect()
             .then((server) => {
@@ -90,10 +87,7 @@ export function App() {
     async function transmitBoulder() {
         const bluetoothPacket = getBluetoothPacket(selectedBoulder?.frames || '', TEST_POSITIONS, TEST_COLORS);
 
-        const device = await navigator.bluetooth.requestDevice({
-            acceptAllDevices: true,
-            optionalServices: [SERVICE_UUID],
-        });
+        const device = requestDevice("Kilter");
 
         device.gatt?.connect()
             .then((server) => {

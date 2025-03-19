@@ -152,7 +152,7 @@ async function writeCharacteristicSeries(characteristic: BluetoothRemoteGATTChar
 export async function requestDevice(board: string): Promise<BluetoothDevice> {
     if (!bluetoothDevice) {
         bluetoothDevice = await navigator.bluetooth.requestDevice({
-            filters: [{ name: board }],
+            filters: [{ namePrefix: board }],
             optionalServices: [SERVICE_UUID],
         });
     }
